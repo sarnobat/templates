@@ -5,6 +5,9 @@
 #
 # 	cat ~/.zshrc | python3 helloworld.py
 #
+# COMPILE TO NATIVE
+# 	cython --embed helloworld.pyx
+# 	gcc -Os -I "/usr/local/homebrew/Cellar/python@3.9/3.9.5/Frameworks/Python.framework/Versions/3.9/include/python3.9" -L "/usr/local/homebrew/Cellar/python@3.9/3.9.5/Frameworks/Python.framework/Versions/3.9/lib/"  helloworld.c -lpython3.9 -o helloworld%
 #-----------------------------------------------------------------------------------------
 
 from pathlib import Path
@@ -38,8 +41,8 @@ for line in input_stream:
 		print (parent)
 		
 		tokens = re.split(r'\.', line)
-		lastElem = tokens[len(tokens)-1]
-		print (lastElem, end='')
+		last_elem = tokens[len(tokens)-1]
+		print (last_elem, end='')
 
 	else:
 		###
