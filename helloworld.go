@@ -27,6 +27,9 @@ func main() {
 	}
 	fmt.Println("Hello " + *optName)
 
+	//
+	// 1) Loop over stdin
+	//
 	in := bufio.NewReader(os.Stdin)
 	for {
 		s, err := in.ReadString('\n')
