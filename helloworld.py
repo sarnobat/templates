@@ -29,9 +29,6 @@ args = parser.parse_args()
 input_stream = io.TextIOWrapper(sys.stdin.buffer, newline=None, encoding='latin1')
 for line in input_stream:
 
-	tokens = re.split(r'\s', line)
-	lastElem = tokens[len(tokens)-1]
-
 	fullpath = line.strip()
 	if os.path.exists(fullpath):
 		##
@@ -39,8 +36,13 @@ for line in input_stream:
 		##
 		parent = Path(line).parent.absolute()
 		print (parent)
+		
+		tokens = re.split(r'\.', line)
+		lastElem = tokens[len(tokens)-1]
+		print (lastElem, end='')
+
 	else:
 		###
 		### 1) Print to stdout
 		###
-		print ("2: " + re.sub(r"^([^\s]*)", r"\033[32m \1 \033[0m", line.rstrip()))
+		print ("stdin: " + re.sub(r"^([^\s]*)", r"\033[32m \1 \033[0m", line.rstrip()))
