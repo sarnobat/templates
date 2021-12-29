@@ -1,3 +1,12 @@
+#-----------------------------------------------------------------------------------------
+# EXAMPLE
+#
+#	find  | python3 helloworld.py
+#
+# 	cat ~/.zshrc | python3 helloworld.py
+#
+#-----------------------------------------------------------------------------------------
+
 from pathlib import Path
 
 import io
@@ -35,4 +44,4 @@ for line in input_stream:
 		### 1) Print to stdout
 		###
 		#print(line)
-		print ("2: " + re.sub(r"^(.*?)[\s$]", r"\033[32m \1 \033[0m", line.rstrip()))
+		print ("2: " + re.sub(r"^([^\s]*)", r"\033[32m \1 \033[0m", line.rstrip()))
