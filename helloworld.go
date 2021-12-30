@@ -10,12 +10,12 @@ import (
 	"bufio"
 	"fmt"
 	"strings"
-//	"path"
-    "path/filepath"
+	//	"path"
 	"github.com/pborman/getopt"
 	"io"
 	"log"
 	"os"
+	"path/filepath"
 )
 
 // echo "hi" | go run main.go
@@ -53,17 +53,16 @@ func main() {
 
 		p := strings.TrimSpace(s)
 		switch i, err := os.Stat(p); {
-			case err != nil:
-				fmt.Println(err)
-			case i.IsDir():
-				fmt.Println(p, "is a directory")
-			default:
-				fmt.Println(p, "is a file")
+		case err != nil:
+			fmt.Println(err)
+		case i.IsDir():
+			fmt.Println(p, "is a directory")
+		default:
+			fmt.Println(p, "is a file")
 		}
-    
 
 		if file, err := os.Stat(p); os.IsNotExist(err) {
-			fmt.Print("added: ", file.Name() , "\n")
+			fmt.Print("added: ", file.Name(), "\n")
 		} else {
 			abs, _ := filepath.Abs(s)
 			fmt.Println("absolute: " + abs)
