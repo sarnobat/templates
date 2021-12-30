@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+// gcc -c helloworld.c && gcc -o helloworld helloworld.o && find | helloworld stdin
 
 // also see https://github.com/sarnobat/c_helloworld/tree/master/1_hello_world 
 int main(void)
