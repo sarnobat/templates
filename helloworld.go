@@ -52,6 +52,9 @@ func main() {
 		//
 		// 3) Parse file path
 		//
+
+		p := strings.TrimSpace(s)
+
 		if file, err := os.Stat(p); os.IsNotExist(err) {
 			fmt.Print("added: ", file.Name(), "\n")
 		} else {
@@ -59,7 +62,6 @@ func main() {
 			fmt.Println("absolute: " + abs)
 		}
 
-		p := strings.TrimSpace(s)
 		switch i, err := os.Stat(p); {
 		case err != nil:
 			fmt.Println(err)
