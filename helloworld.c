@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
- 
+
+// also see https://github.com/sarnobat/c_helloworld/tree/master/1_hello_world 
 int main(void)
 {
 	FILE *stream;
@@ -8,16 +9,15 @@ int main(void)
 	size_t len = 0;
 	ssize_t read;
  
-	stream = fopen("file.txt", "r");
-	if (stream == NULL)
-		exit(EXIT_FAILURE);
+// 	stream = fopen("file.txt", "r");
+// 	if (stream == NULL)
+// 		exit(EXIT_FAILURE);
  
-	while ((read = getline(&line, &len, stream)) != -1) {
-		printf("Retrieved line of length %u :\n", read);
+	while ((read = getline(&line, &len, stdin)) != -1) {
 		printf("%s", line);
 	}
  
 	free(line);
-	fclose(stream);
+// 	fclose(stream);
 	exit(EXIT_SUCCESS);
 }
