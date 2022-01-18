@@ -49,6 +49,8 @@ for line in input_stream:
 		last_elem = tokens[len(tokens)-1]
 		print (last_elem, end='')
 
+		## TODO: call a shell program instead
+
 	else:
 		###
 		### 1) Print to stdout
