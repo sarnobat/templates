@@ -1,9 +1,10 @@
-//-------------
+//-----------------------------------------------------------------------------------------
 // EXAMPLE
 //
-//   find | go run helloworld.go
+//   find | go run ~/github/templates.git/helloworld.go
 //
-//--------------
+//-----------------------------------------------------------------------------------------
+
 package main
 
 import (
@@ -14,9 +15,13 @@ import (
 	"io"
 	"log"
 	"os"
+	"os/exec"
 	"path/filepath"
 )
 
+var counts = make(map[string]int)
+
+# golang MUST have a main function (unlike python)
 func main() {
 	//
 	// 5) CLI options
@@ -48,18 +53,23 @@ func main() {
 		// Do something with the line of text
 		// in string variable s.
 		_ = s
+		p := strings.TrimSpace(s)
 
 		//
 		// 3) Parse file path
 		//
 
-		p := strings.TrimSpace(s)
-
 		if file, err := os.Stat(p); os.IsNotExist(err) {
-			fmt.Print("added: ", file.Name(), "\n")
+			if (file == nil) {
+				fmt.Println("file is null (dangling symlink?)", p)
+				continue
+
+			} else {
+				fmt.Print("added: ", p, "\n")
+			}
 		} else {
-			abs, _ := filepath.Abs(s)
-			fmt.Println("absolute: " + abs)
+			abs, _ := filepath.Abs(p)
+			fmt.Println("	absolute: " + abs)
 		}
 
 		switch i, err := os.Stat(p); {
@@ -70,6 +80,38 @@ func main() {
 		default:
 			fmt.Println(p, "is a file")
 		}
-	}
 
+		//
+		// 6) Call a shell program instead
+		//
+		cmd := exec.Command("dirname", p)
+		out, err := cmd.CombinedOutput()
+		if err != nil {
+		        log.Fatal(err)
+		}
+		fmt.Println("	BASENAME: ",strings.Trim(string(out),"\n"),)
+
+
+		cmd2 := exec.Command("basename", p)
+		out2, err2 := cmd2.CombinedOutput()
+		if err2 != nil {
+		        log.Fatal(err2)
+		}
+		dirname := strings.Trim(string(out2),"\n")
+		fmt.Println("	DIRNAME: ", dirname)
+
+		//
+		// 5) dictionary
+		//
+		_ ,exist := counts[dirname]
+		if ! exist {
+			counts[dirname] = 1
+		} else {
+			counts[dirname]++
+		}
+
+		// We don't need to check if it's a folder to recurse into. Stdin will ensure that
+		// we recurse.
+		//if counts
+	}
 }
