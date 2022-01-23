@@ -70,14 +70,6 @@ func main() {
 		//
 
 		if file, err := os.Stat(p); os.IsNotExist(err) {
-			if (file == nil) {
-				fmt.Println("file is null (dangling symlink?)", p)
-				continue
-
-			} else {
-				fmt.Print("added: ", p, "\n")
-			}
-		} else {
 			abs, _ := filepath.Abs(p)
 			fmt.Println("	absolute: " + abs)
 
@@ -123,6 +115,14 @@ func main() {
 			// We don't need to check if it's a folder to recurse into. Stdin will ensure that
 			// we recurse.
 			//if counts
+		} else {
+			if (file == nil) {
+				fmt.Println("file is null (dangling symlink?)", p)
+				continue
+
+			} else {
+				fmt.Print("added: ", p, "\n")
+			}
 		}
 	}
 }
