@@ -1,13 +1,13 @@
 //-----------------------------------------------------------------------------------------
 // EXAMPLE
 //
-// 		find ~/trash/ 	| go run ~/github/templates.git/helloworld.go
-//		cat ~/.zshrc 	|  go run ~/github/templates.git/helloworld.go
+//	find ~/trash/ 	| go run ~/github/templates.git/helloworld.go
+//	cat ~/.zshrc 	|  go run ~/github/templates.git/helloworld.go
 //
-// COMPILE
+// COMPILE TO NATIVE
 //
-//		# this will embed everything, as of 2020
-//		go build helloworld.go
+//	# this will embed everything, as of 2020
+//	go build helloworld.go
 //
 // DATE
 //
@@ -35,9 +35,9 @@ var counts = make(map[string]int)
 
 // golang MUST have a main function (unlike python)
 func main() {
-	//
-	// 5) CLI options
-	//
+	///
+	/// 5) CLI options
+	///
 	optName := getopt.StringLong("name", 'n', "", "Your name")
 	optHelp := getopt.BoolLong("help", 0, "Help")
 	getopt.Parse()
@@ -48,9 +48,9 @@ func main() {
 	}
 	fmt.Println("Hello " + *optName)
 
-	//
-	// 1) Loop over stdin
-	//
+	///
+	/// 1) Loop over stdin
+	///
 	in := bufio.NewReader(os.Stdin)
 	for {
 		s, err := in.ReadString('\n')
@@ -86,9 +86,9 @@ func main() {
 			abs, _ := filepath.Abs(p)
 			fmt.Println("	absolute: " + abs)
 
-			//
-			// 6) Call a shell program instead
-			//
+			///
+			/// 6) Call a shell program instead
+			///
 			cmd := exec.Command("dirname", p)
 			out, err := cmd.CombinedOutput()
 			if err != nil {
@@ -103,9 +103,9 @@ func main() {
 			dirname := strings.Trim(string(out2), "\n")
 			//			fmt.Println("	DIRNAME: ", dirname)
 
-			//
-			// 5) dictionary
-			//
+			///
+			/// 5) dictionary
+			///
 			_, exist := counts[dirname]
 			if !exist {
 				counts[dirname] = 1
@@ -120,17 +120,17 @@ func main() {
 			}
 
 		} else {
-			//
-			// 1) Print to stdout
-			//
+			///
+			/// 1) Print to stdout
+			///
 			if file == nil {
 				fmt.Print("added: ", p, "\n")
 			}
 
-			//
-			// 2) Regex capture groups extracted and read separately (not used directly
-			// in a substitution) will cover more scenarios.
-			//
+			///
+			/// 2) Regex capture groups extracted and read separately (not used directly
+			/// in a substitution) will cover more scenarios.
+			///
 			regex := "^\\s*([0-9]+)*\\s*DOCUMENT_FREQUENCY_TOTAL..(.*)\n"
 			r := regexp.MustCompile(regex)
 			line := s
