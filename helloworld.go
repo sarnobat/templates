@@ -21,14 +21,14 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"strings"
 	"github.com/pborman/getopt"
 	"io"
 	"log"
 	"os"
-	"regexp"
 	"os/exec"
 	"path/filepath"
+	"regexp"
+	"strings"
 )
 
 var counts = make(map[string]int)
@@ -100,14 +100,14 @@ func main() {
 			if err2 != nil {
 				log.Fatal(err2)
 			}
-			dirname := strings.Trim(string(out2),"\n")
-//			fmt.Println("	DIRNAME: ", dirname)
+			dirname := strings.Trim(string(out2), "\n")
+			//			fmt.Println("	DIRNAME: ", dirname)
 
 			//
 			// 5) dictionary
 			//
-			_ ,exist := counts[dirname]
-			if ! exist {
+			_, exist := counts[dirname]
+			if !exist {
 				counts[dirname] = 1
 			} else {
 				counts[dirname]++
@@ -116,14 +116,14 @@ func main() {
 			// We don't need to check if it's a folder to recurse into. Stdin will ensure that
 			// we recurse.
 			if counts[dirname] <= 5 {
-				fmt.Println("",p,"\n")
+				fmt.Println("", p, "\n")
 			}
-				
+
 		} else {
 			//
 			// 1) Print to stdout
 			//
-			if (file == nil) {
+			if file == nil {
 				fmt.Print("added: ", p, "\n")
 			}
 
