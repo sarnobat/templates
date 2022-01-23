@@ -1,8 +1,14 @@
 //-----------------------------------------------------------------------------------------
 // EXAMPLE
 //
-//   find | go run ~/github/templates.git/helloworld.go
+// 		find | go run ~/github/templates.git/helloworld.go
 //
+// COMPILE
+//
+//		# this will embed everything, as of 2020
+//		go build helloworld.go
+//
+
 //-----------------------------------------------------------------------------------------
 
 package main
@@ -21,7 +27,7 @@ import (
 
 var counts = make(map[string]int)
 
-# golang MUST have a main function (unlike python)
+// golang MUST have a main function (unlike python)
 func main() {
 	//
 	// 5) CLI options
@@ -70,48 +76,49 @@ func main() {
 		} else {
 			abs, _ := filepath.Abs(p)
 			fmt.Println("	absolute: " + abs)
+
+
+			switch i, err := os.Stat(p); {
+			case err != nil:
+				fmt.Println(err)
+			case i.IsDir():
+				fmt.Println(p, "is a directory")
+			default:
+				fmt.Println(p, "is a file")
+			}
+
+			//
+			// 6) Call a shell program instead
+			//
+			cmd := exec.Command("dirname", p)
+			out, err := cmd.CombinedOutput()
+			if err != nil {
+					log.Fatal(err)
+			}
+			fmt.Println("	BASENAME: ",strings.Trim(string(out),"\n"),)
+
+
+			cmd2 := exec.Command("basename", p)
+			out2, err2 := cmd2.CombinedOutput()
+			if err2 != nil {
+					log.Fatal(err2)
+			}
+			dirname := strings.Trim(string(out2),"\n")
+			fmt.Println("	DIRNAME: ", dirname)
+
+			//
+			// 5) dictionary
+			//
+			_ ,exist := counts[dirname]
+			if ! exist {
+				counts[dirname] = 1
+			} else {
+				counts[dirname]++
+			}
+
+			// We don't need to check if it's a folder to recurse into. Stdin will ensure that
+			// we recurse.
+			//if counts
 		}
-
-		switch i, err := os.Stat(p); {
-		case err != nil:
-			fmt.Println(err)
-		case i.IsDir():
-			fmt.Println(p, "is a directory")
-		default:
-			fmt.Println(p, "is a file")
-		}
-
-		//
-		// 6) Call a shell program instead
-		//
-		cmd := exec.Command("dirname", p)
-		out, err := cmd.CombinedOutput()
-		if err != nil {
-		        log.Fatal(err)
-		}
-		fmt.Println("	BASENAME: ",strings.Trim(string(out),"\n"),)
-
-
-		cmd2 := exec.Command("basename", p)
-		out2, err2 := cmd2.CombinedOutput()
-		if err2 != nil {
-		        log.Fatal(err2)
-		}
-		dirname := strings.Trim(string(out2),"\n")
-		fmt.Println("	DIRNAME: ", dirname)
-
-		//
-		// 5) dictionary
-		//
-		_ ,exist := counts[dirname]
-		if ! exist {
-			counts[dirname] = 1
-		} else {
-			counts[dirname]++
-		}
-
-		// We don't need to check if it's a folder to recurse into. Stdin will ensure that
-		// we recurse.
-		//if counts
 	}
 }
