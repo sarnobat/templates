@@ -69,7 +69,7 @@ func main() {
 		// 3) Parse file path
 		//
 
-		if file, err := os.Stat(p); os.IsNotExist(err) {
+		if file, err := os.Stat(p); !os.IsNotExist(err) {
 			abs, _ := filepath.Abs(p)
 			fmt.Println("	absolute: " + abs)
 
