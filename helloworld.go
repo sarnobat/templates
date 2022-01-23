@@ -35,6 +35,7 @@ var counts = make(map[string]int)
 
 // golang MUST have a main function (unlike python)
 func main() {
+
 	///
 	/// 5) CLI options
 	///

@@ -1,3 +1,21 @@
+//-----------------------------------------------------------------------------------------
+// EXAMPLE
+//
+//	find ~/trash/ | nodejs helloworld.js
+//
+// 	cat ~/.zshrc | nodejs helloworld.js
+//
+// DATE
+//
+//	2022 Jan 23
+//
+// AUTHOR
+//
+//	ss401533@gmail.com
+//
+//-----------------------------------------------------------------------------------------
+
+
 var readline = require('readline');
 var rl = readline.createInterface({
   input: process.stdin,
@@ -6,5 +24,5 @@ var rl = readline.createInterface({
 });
 
 rl.on('line', function(line){
-    console.log(line);
+    console.log('added: ' + line);
 })

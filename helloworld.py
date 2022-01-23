@@ -55,14 +55,12 @@ for line in input_stream:
 		##
 		## 3) Parse file path
 		##
-# 		parent = Path(line).parent.absolute()
-# 		print (parent)
 		
-# 		tokens = re.split(r'\.', line)
-# 		last_elem = tokens[len(tokens)-1]
-#		print (last_elem, end='')
-		# TODO: check if it's a file or a dir
-		# TODO: get absolute path
+		# TODO: check if it's a file or a dir (which shell can't do so compactly)
+		# get absolute path
+ 		parent = Path(line).parent.absolute()
+ 		print (parent)
+
 
 		##
 		## 6) Call a shell program instead
@@ -95,3 +93,6 @@ for line in input_stream:
 		
 		### 2) Regex capture groups extracted and read separately (not used directly
 		### in a substitution) will cover more scenarios.
+# 		tokens = re.split(r'\.', line)
+# 		last_elem = tokens[len(tokens)-1]
+#		print (last_elem, end='')
