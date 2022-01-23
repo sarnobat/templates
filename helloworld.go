@@ -1,7 +1,8 @@
 //-----------------------------------------------------------------------------------------
 // EXAMPLE
 //
-// 		find | go run ~/github/templates.git/helloworld.go
+// 		find ~/trash/ 	| go run ~/github/templates.git/helloworld.go
+//		cat ~/.zshrc 	|  go run ~/github/templates.git/helloworld.go
 //
 // COMPILE
 //
@@ -25,6 +26,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"regexp"
 	"os/exec"
 	"path/filepath"
 )
@@ -70,18 +72,19 @@ func main() {
 		//
 
 		if file, err := os.Stat(p); !os.IsNotExist(err) {
-			abs, _ := filepath.Abs(p)
-			fmt.Println("	absolute: " + abs)
 
-
+			// check if it's a file or a dir
 			switch i, err := os.Stat(p); {
 			case err != nil:
 				fmt.Println(err)
 			case i.IsDir():
-				fmt.Println(p, "is a directory")
+				fmt.Println("	", p, "is a directory")
 			default:
-				fmt.Println(p, "is a file")
+				fmt.Println("	", p, "is a file")
 			}
+			// get absolute path
+			abs, _ := filepath.Abs(p)
+			fmt.Println("	absolute: " + abs)
 
 			//
 			// 6) Call a shell program instead
@@ -89,18 +92,16 @@ func main() {
 			cmd := exec.Command("dirname", p)
 			out, err := cmd.CombinedOutput()
 			if err != nil {
-					log.Fatal(err)
+				log.Fatal(err, out)
 			}
-			fmt.Println("	BASENAME: ",strings.Trim(string(out),"\n"),)
-
 
 			cmd2 := exec.Command("basename", p)
 			out2, err2 := cmd2.CombinedOutput()
 			if err2 != nil {
-					log.Fatal(err2)
+				log.Fatal(err2)
 			}
 			dirname := strings.Trim(string(out2),"\n")
-			fmt.Println("	DIRNAME: ", dirname)
+//			fmt.Println("	DIRNAME: ", dirname)
 
 			//
 			// 5) dictionary
@@ -114,14 +115,36 @@ func main() {
 
 			// We don't need to check if it's a folder to recurse into. Stdin will ensure that
 			// we recurse.
-			//if counts
+			if counts[dirname] <= 5 {
+				fmt.Println("",p,"\n")
+			}
+				
 		} else {
+			//
+			// 1) Print to stdout
+			//
 			if (file == nil) {
-				fmt.Println("file is null (dangling symlink?)", p)
-				continue
-
-			} else {
 				fmt.Print("added: ", p, "\n")
+			}
+
+			//
+			// 2) Regex capture groups extracted and read separately (not used directly
+			// in a substitution) will cover more scenarios.
+			//
+			regex := "^\\s*([0-9]+)*\\s*DOCUMENT_FREQUENCY_TOTAL..(.*)\n"
+			r := regexp.MustCompile(regex)
+			line := s
+			elem := r.FindStringSubmatch(line)
+
+			if len(elem) == 0 {
+				// no match
+				continue
+			}
+
+			// elem[0] is the entire line
+			for i := 1; i < len(elem); i++ {
+				fmt.Print(elem[i])
+				fmt.Println()
 			}
 		}
 	}
