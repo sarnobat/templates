@@ -26,6 +26,12 @@ const commandLineArgs	= require('command-line-args')
 	/// 5) CLI options
 	///
 const optionDefinitions = [
+  {
+    name: 'help',
+    alias: 'h',
+    type: Boolean,
+    description: 'Display this usage guide.'
+  },
   { name: 'verbose', alias: 'v', type: Boolean },
   { name: 'src', type: String, multiple: true, defaultOption: true },
   { name: 'num', alias: 'n', type: Number, defaultValue : 5}
