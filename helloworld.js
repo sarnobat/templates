@@ -19,8 +19,8 @@
 //-----------------------------------------------------------------------------------------
 
 
-var readline = require('readline');
-const commandLineArgs = require('command-line-args')
+const readline		= require('readline');
+const commandLineArgs	= require('command-line-args')
 
 
 var rl = readline.createInterface({
