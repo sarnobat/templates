@@ -58,8 +58,8 @@ for line in input_stream:
 		
 		# TODO: check if it's a file or a dir (which shell can't do so compactly)
 		# get absolute path
- 		parent = Path(line).parent.absolute()
- 		print (parent)
+		parent = Path(line).parent.absolute()
+		print (parent)
 
 
 		##
@@ -70,7 +70,7 @@ for line in input_stream:
 		dirname = run(["dirname",line], capture_output=True).stdout.decode("utf-8").strip()
 		basename = run(["basename",line], capture_output=True).stdout.decode("utf-8").strip()
 
-# 		print (counts)
+#		print (counts)
 
 		##
 		## 5) dictionary
@@ -83,7 +83,7 @@ for line in input_stream:
 		# We don't need to check if it's a folder to recurse into. Stdin will ensure that
 		# we recurse.
 		if counts[dirname] <= args.num_max:
-			print (line.strip(), end='\n')
+			print (line.strip(), end="\n")
 
 	else:
 		###

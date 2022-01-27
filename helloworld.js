@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------------------------
 // EXAMPLE
 //
-//	find ~/trash/	| node helloworld.js
+//	find ~/trash/	| node helloworld.js -n 4
 //
 // 	cat ~/.zshrc	| node helloworld.js
 //
@@ -20,11 +20,21 @@
 
 
 const readline		= require('readline');
-const commandLineArgs	= require('command-line-args')
+
 
 	///
 	/// 5) CLI options
 	///
+
+var stdio = require('stdio');
+var getopt = stdio.getopt;
+
+
+const options = getopt({
+	num_max: {key: 'n', default : 5, description: 'If the project is finished'}
+});
+
+
 const optionDefinitions = [
   {
     name: 'help',
@@ -34,13 +44,15 @@ const optionDefinitions = [
   },
   { name: 'verbose', alias: 'v', type: Boolean },
   { name: 'src', type: String, multiple: true, defaultOption: true },
-  { name: 'num', alias: 'n', type: Number, defaultValue : 5}
+  { name: 'num-max', alias: 'n', type: Number, defaultValue : 5}
 ]
-const options = commandLineArgs(optionDefinitions)
+//const options2 = commandLineArgs(optionDefinitions)
 
 
 
-
+	///
+	/// 1) Loop over stdin
+	///
 var rl = readline.createInterface({
 	input: process.stdin,
 	output: process.stdout,
@@ -50,6 +62,11 @@ var rl = readline.createInterface({
 
 
 rl.on('line', function(line){
-	console.log(options.num);
+//	console.log(options2.n);
+//	console.log(ops.kaka);
+	console.log(options);
 	console.log('added: ' + line);
+//	if (ops.kaka && ops.check) {
+//	    console.log(ops.kaka + ops.check[0]);
+//	}
 })
