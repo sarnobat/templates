@@ -5,6 +5,9 @@
 #
 # 	cat ~/.zshrc | python3 helloworld.py
 #
+#	
+#	head -40 ~/trash/files_*.txt | python3 /Volumes/git/github/templates.git/helloworld.py     2> /dev/null
+#
 # COMPILE TO NATIVE
 # 	cython --embed helloworld.pyx
 # 	gcc -Os -I "/usr/local/homebrew/Cellar/python@3.9/3.9.5/Frameworks/Python.framework/Versions/3.9/include/python3.9" -L "/usr/local/homebrew/Cellar/python@3.9/3.9.5/Frameworks/Python.framework/Versions/3.9/lib/"  helloworld.c -lpython3.9 -o helloworld%
