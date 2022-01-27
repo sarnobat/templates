@@ -5,7 +5,7 @@
 #
 # 	cat ~/.zshrc | python3 helloworld.py
 #
-#	
+#	cat /3TB/files_1*.txt | python3 /home/sarnobat/github/templates.git/helloworld.py  2> /dev/null | tee /tmp/files_summary.txt; cp /tmp/files_summary.txt /media/sarnobat/3TB/
 #	head -40 ~/trash/files_*.txt | python3 /Volumes/git/github/templates.git/helloworld.py     2> /dev/null
 #
 # COMPILE TO NATIVE
@@ -34,6 +34,7 @@ from pathlib import Path
 
 # TODO: wrap this in a main function like the golang one, to show how to declare and call functions
 
+lineCount = 0
 counts = {}
 sizes = {
 	100: 0,
@@ -59,6 +60,14 @@ counts_by_size = {
 	10000000000 : 0,
 	100000000000 : 0
 }
+
+def sizeof_fmt(num, suffix=""):
+    for unit in ["", "k", "M", "G", "T", "P", "E", "Z"]:
+        if abs(num) < 1024.0:
+            return f"{num:3.1f}{unit}{suffix}"
+        num /= 1024.0
+    return f"{num:.1f}Yi{suffix}"
+
 ###
 ### 5) CLI options
 ###
@@ -74,6 +83,7 @@ totalSize = 0
 input_stream = io.TextIOWrapper(sys.stdin.buffer, newline=None, encoding='latin1')
 for line in input_stream:
 
+	lineCount += 1
 	fullpath = line.strip()
 	# TODO: do we need to check if it exists? For the ultimate use case, I guess so.
 	# But if we're using relative paths (e.g. for striped videos dirs) this might be
@@ -85,10 +95,10 @@ for line in input_stream:
 		
 		# TODO: check if it's a file or a dir (which shell can't do so compactly)
 		# get absolute path
-		parent = Path(line).parent.absolute()
-		print (parent)
-		print("[DEBUG] exists: " + fullpath, file=sys.stderr)
-#		if Path(line).exists():
+		parent = Path(fullpath).parent.absolute()
+		print("[DEBUG] parent dir: " + str(parent), file=sys.stderr, end='\r', flush=True)
+# 		print("[DEBUG] exists: " + fullpath, file=sys.stderr, end='\r', flush=True)
+
 		if os.path.isfile(fullpath):
 			size = Path(fullpath).stat().st_size
 			if size < 100:
@@ -106,9 +116,12 @@ for line in input_stream:
 			elif size < 1000000:
 				sizes[1000000] += size
 				counts_by_size[1000000] += 1
+			elif size < 10000000:
+				sizes[10000000] += size
+				counts_by_size[10000000] += 1
 			elif size < 100000000:
 				sizes[100000000] += size
-				counts_by_size[10000000] += 1
+				counts_by_size[100000000] += 1
 			elif size < 1000000000:
 				sizes[1000000000] += size
 				counts_by_size[1000000000] += 1
@@ -119,7 +132,8 @@ for line in input_stream:
 				sizes[100000000000] += size
 				counts_by_size[100000000000] += 1
 			totalSize += size
-			print ("[DEBUG] totalSize = " + str(totalSize), file=sys.stderr)
+# 			print("\n[DEBUG] sizes so far: " + sizeof_fmt(totalSize) + "\t| " + sizeof_fmt(sizes[100000000000]) + "\t" + sizeof_fmt(sizes[10000000000]) + "\t" + sizeof_fmt(sizes[1000000000]) + "\t" + sizeof_fmt(sizes[100000000]) + "\t" + sizeof_fmt(sizes[10000000]) + "\t(" + str(lineCount) + " files)", file=sys.stderr, end='\r', flush=True)
+			print("\n[DEBUG] sizes so far: " + sizeof_fmt(totalSize) + "\t| " + sizeof_fmt(sizes[100000000000]) + "\t" + sizeof_fmt(sizes[10000000000]) + "\t" + sizeof_fmt(sizes[1000000000]) + "\t" + sizeof_fmt(sizes[100000000]) + "\t" + sizeof_fmt(sizes[10000000]) + "\t(" + str(lineCount) + " files)", file=sys.stderr, end='\n')
 
 
 		##
@@ -144,9 +158,10 @@ for line in input_stream:
 		# we recurse.
 		if counts[dirname] <= args.num_max:
 			print (line.strip(), end="\n")
+			pass
 
 	else:
-		print("[DEBUG] not existing: " + fullpath, file=sys.stderr)
+		print("[DEBUG] not existing: " + fullpath, file=sys.stderr, end='\r', flush=True)
 		###
 		### 1) Print to stdout
 		###
@@ -159,12 +174,6 @@ for line in input_stream:
 #		print (last_elem, end='')
 
 
-def sizeof_fmt(num, suffix=""):
-    for unit in ["", "k", "M", "G", "T", "P", "E", "Z"]:
-        if abs(num) < 1024.0:
-            return f"{num:3.1f}{unit}{suffix}"
-        num /= 1024.0
-    return f"{num:.1f}Yi{suffix}"
 
 
 print("100000000000 size:\t" 	+ sizeof_fmt(sizes[100000000000])	+ "\t(" + str(counts_by_size[100000000000]) + " files)")
