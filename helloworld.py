@@ -7,6 +7,7 @@
 #
 #	cat /3TB/files_1*.txt | python3 /home/sarnobat/github/templates.git/helloworld.py  2> /dev/null | tee /tmp/files_summary.txt; cp /tmp/files_summary.txt /media/sarnobat/3TB/
 #	head -40 ~/trash/files_*.txt | python3 /Volumes/git/github/templates.git/helloworld.py     2> /dev/null
+#	find -type f | python3 /home/sarnobat/github/templates.git/helloworld.py | tee /tmp/files_summary2.txt
 #
 # COMPILE TO NATIVE
 # 	cython --embed helloworld.pyx
@@ -133,7 +134,7 @@ for line in input_stream:
 				counts_by_size[100000000000] += 1
 			totalSize += size
 # 			print("\n[DEBUG] sizes so far: " + sizeof_fmt(totalSize) + "\t| " + sizeof_fmt(sizes[100000000000]) + "\t" + sizeof_fmt(sizes[10000000000]) + "\t" + sizeof_fmt(sizes[1000000000]) + "\t" + sizeof_fmt(sizes[100000000]) + "\t" + sizeof_fmt(sizes[10000000]) + "\t(" + str(lineCount) + " files)", file=sys.stderr, end='\r', flush=True)
-			print("\n[DEBUG] sizes so far: " + sizeof_fmt(totalSize) + "\t| " + sizeof_fmt(sizes[100000000000]) + "\t" + sizeof_fmt(sizes[10000000000]) + "\t" + sizeof_fmt(sizes[1000000000]) + "\t" + sizeof_fmt(sizes[100000000]) + "\t" + sizeof_fmt(sizes[10000000]) + "\t(" + str(lineCount) + " files)", file=sys.stderr, end='\n')
+			print("\n[DEBUG] sizes so far: " + sizeof_fmt(totalSize) + "\t| " + sizeof_fmt(sizes[100000000000]) + "\t" + sizeof_fmt(sizes[10000000000]) + "\t" + sizeof_fmt(sizes[1000000000]) + "\t" + sizeof_fmt(sizes[100000000]) + "\t" + sizeof_fmt(sizes[10000000]) + "\t(" + str(lineCount) + " files) " + line.strip(), file=sys.stderr, end='\n')
 
 
 		##

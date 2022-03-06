@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-// gcc -c helloworld.c && gcc -o helloworld helloworld.o && find | helloworld stdin
+// gcc -c helloworld.c && gcc -o helloworldc helloworld.o && find | ./helloworldc stdin
 
 // also see https://github.com/sarnobat/c_helloworld/tree/master/1_hello_world 
 int main(void)
@@ -10,7 +10,7 @@ int main(void)
 	ssize_t read;
  
 	while ((read = getline(&line, &len, stdin)) != -1) {
-		printf("%s", line);
+		printf("from c: %s", line);
 	}
  
 	free(line);

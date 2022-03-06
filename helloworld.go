@@ -125,7 +125,7 @@ func main() {
 			/// 1) Print to stdout
 			///
 			if file == nil {
-				fmt.Print("added: ", p, "\n")
+				fmt.Print("from go: ", p, "\n")
 			}
 
 			///
