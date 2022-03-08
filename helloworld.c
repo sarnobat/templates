@@ -5,6 +5,9 @@
 
 // I can't find a library that requires you to explicitly specify the path to it. glibc seems
 // to get found from some well-known place
+
+// Another example that works:
+// /Volumes/git/github/c_helloworld/6_exif_library
 int main(void)
 {
 	char *line = NULL;
