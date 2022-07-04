@@ -9,7 +9,8 @@ proc listDirs {} {
 	set output_list [exec seq 1 10]
 	foreach dir_base_name $output_list {
 		set dir_base_name "$dir_base_name"
-		button ".b$dir_base_name" -text "$dir_base_name" -command "puts $dir_base_name"
+		button ".b$dir_base_name" -text "$dir_base_name" 
+			-command "puts $dir_base_name"
 		pack ".b$dir_base_name"
 	}
 }
