@@ -3,14 +3,26 @@ helloworld templates for each language that you can copy and paste to quickly cr
 
 ### Tcl/tk
 ```tcl
-package require Tk
+#!/usr/local/bin/wish
 
-variable hello
+proc listDirs {} {
+	set output_list [exec seq 1 10]
+	foreach dir_base_name $output_list {
+		set dir_base_name "$dir_base_name"
+		button ".b$dir_base_name" -text "$dir_base_name" -command "puts $dir_base_name"
+		pack ".b$dir_base_name"
+	}
+}
+
+listDirs
+
 ```
 
 ### Python
 ```python
-from subprocess import run
+import fileinput
+for line in fileinput.input():
+	print "[info] " + line.strip()
 ```
 
 ### Go
