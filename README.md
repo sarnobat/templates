@@ -23,7 +23,14 @@ listDirs
 import io
 import subprocess
 
-for line in io.TextIOWrapper(subprocess.Popen("find / -type d | grep proj | grep nl", stdout=subprocess.PIPE, shell=True).stdout, encoding="utf-8"):
+for line in io.TextIOWrapper(
+		subprocess.Popen(
+			"find / -type d | grep proj | grep nl",
+			stdout=subprocess.PIPE,
+			shell=True)
+		.stdout,
+		encoding="utf-8"):
+
 	print "[info] " + line.strip()
 ```
 
