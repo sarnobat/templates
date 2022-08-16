@@ -35,8 +35,25 @@ while read line ; do
   
 done < "${1:-/dev/stdin}"
 
+
+### 7) convert epoch to date and vv
+epoch=`date +%s --date "2022-01-01" `
+date_iso=`date --iso-8601 --date @1641024000`
+current_date=`date`
+
+### 8) concurrent
+echo "this is concurrent code" &
+
+### 9) add padding after string
+find | head | xargs -n 1 printf "column 1 %-50s%scolumn 2\n"
+
+### 10) write to file
+find | tee /tmp/out.log
+
+### 11) web scrape
+curl 'https://www.google.com' | lynx  -stdin -image_links  -dump
+
 ### 2D plot
 seq 1 1000| shuf | xargs -n 2 | sort -n | tee /tmp/hello.dat
 gnuplot -e "set terminal dumb; plot '/tmp/hello.dat'"
 
-date
