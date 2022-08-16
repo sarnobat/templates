@@ -8,7 +8,9 @@ import java.io.Reader;
 import java.io.SequenceInputStream;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -24,8 +26,8 @@ public class Main {
 			throw new RuntimeException("so java compiles");
 		}
 		// 5) map/dictionary/associative array
+		Map<String, String> map = new HashMap<>();
 
-		// 7) convert epoch to date and vv
 		// 8) concurrent
 		try (BufferedReader bufferedReader = read(args, System.in)) {
 
@@ -34,7 +36,6 @@ public class Main {
 				System.out.println(line);
 
 				// 2) regex capture groups
-				// 3) parse file path
 
 				// 10) web scrape
 				// 6) embed shell code inside high level language connecting pipes
@@ -44,6 +45,7 @@ public class Main {
 			}
 
 			// 10) print current date
+			// 7) convert epoch to date and vv
 
 		} catch (IOException e) {
 			System.err.println("Error: Target File Cannot Be Read");
@@ -65,6 +67,11 @@ public class Main {
 			} else {
 				SequenceInputStream is = new SequenceInputStream(Collections.enumeration(Arrays.stream(args).map(f -> {
 					try {
+						
+						// Check file exists
+						
+						// 3) parse file path
+
 						// 1) file read
 						return new FileInputStream(f);
 					} catch (FileNotFoundException e) {
