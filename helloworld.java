@@ -1,17 +1,27 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.io.SequenceInputStream;
+import java.io.UncheckedIOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * find | /usr/local/Cellar/openjdk@11/11.0.12/bin/java helloworld.java
@@ -26,7 +36,7 @@ public class Main {
 			throw new RuntimeException("so java compiles");
 		}
 		// 5) map/dictionary/associative array
-		Map<String, String> map = new HashMap<>();
+		Map<String, Integer> map = new HashMap<>();
 
 		// 8) concurrent
 		try (BufferedReader bufferedReader = read(args, System.in)) {
@@ -36,8 +46,22 @@ public class Main {
 				System.out.println(line);
 
 				// 2) regex capture groups
+				Pattern pattern = Pattern.compile("^(/.*)/([^\\.]*\\.([^$]*))$");
+				Matcher matcher = pattern.matcher(line);
+				String dir = matcher.group(1);
+				String file = matcher.group(2);
+				String extension = matcher.group(3);
 
-				// 10) web scrape
+				// 5) Read and write to a map
+				int count = map.getOrDefault(extension, 0);
+				map.putIfAbsent(extension, count++);
+
+				System.out.printf("%s %s %s", extension, file, dir);
+
+				// 11) create json object - not possible without a third party library
+
+				// 10) web scrape - hmmmmm, don't do this in the main loop, keep the input to
+				// something easy like file paths, not web links
 				// 6) embed shell code inside high level language connecting pipes
 				// 9) print with padding
 				// 10) write to file
@@ -46,6 +70,32 @@ public class Main {
 
 			// 10) print current date
 			// 7) convert epoch to date and vv
+			long currentTime = System.currentTimeMillis();
+			String dateFormattedString = DateTimeFormatter.ISO_LOCAL_DATE.format(LocalDate.ofEpochDay(currentTime));
+			System.out.println(dateFormattedString);
+			long dateEpoch = LocalDate.parse(dateFormattedString, DateTimeFormatter.ofPattern("yyyy-MM-DD"))
+					.toEpochDay();
+
+			Path path = Paths.get("/tmp/statistics " + dateFormattedString + ".txt");
+			File file = Files.createFile(path).toFile();
+			boolean createdReport = file.createNewFile();
+			System.err.println(dateEpoch);
+			try (BufferedWriter writer = Files.newBufferedWriter(path, StandardOpenOption.CREATE,
+					StandardOpenOption.TRUNCATE_EXISTING);) {
+				// Read the file using Files.lines and collect it into a List
+				map.entrySet().forEach(line -> {
+					try {
+						writer.write(String.format("%d %s\n", line.getValue(), line.getKey()));
+					} catch (IOException e) {
+						throw new UncheckedIOException(e);
+					}
+				});
+				writer.flush();
+			}
+
+			try (Stream<String> lines = Files.lines(Path.of(path.toUri()))) {
+				lines.sorted().forEach(System.out::println);
+			}
 
 		} catch (IOException e) {
 			System.err.println("Error: Target File Cannot Be Read");
@@ -67,9 +117,9 @@ public class Main {
 			} else {
 				SequenceInputStream is = new SequenceInputStream(Collections.enumeration(Arrays.stream(args).map(f -> {
 					try {
-						
+
 						// Check file exists
-						
+
 						// 3) parse file path
 
 						// 1) file read
