@@ -77,24 +77,28 @@ public class Main {
 					.toEpochDay();
 
 			Path path = Paths.get("/tmp/statistics " + dateFormattedString + ".txt");
-			File file = Files.createFile(path).toFile();
-			boolean createdReport = file.createNewFile();
-			System.err.println(dateEpoch);
-			try (BufferedWriter writer = Files.newBufferedWriter(path, StandardOpenOption.CREATE,
-					StandardOpenOption.TRUNCATE_EXISTING);) {
-				// Read the file using Files.lines and collect it into a List
-				map.entrySet().forEach(line -> {
-					try {
-						writer.write(String.format("%d %s\n", line.getValue(), line.getKey()));
-					} catch (IOException e) {
-						throw new UncheckedIOException(e);
-					}
-				});
-				writer.flush();
-			}
+			// 3) parse file path
+			if (path.getParent().toFile().exists()) {
 
-			try (Stream<String> lines = Files.lines(Path.of(path.toUri()))) {
-				lines.sorted().forEach(System.out::println);
+				File file = Files.createFile(path).toFile();
+				boolean createdReport = file.createNewFile();
+				System.err.println(dateEpoch);
+				try (BufferedWriter writer = Files.newBufferedWriter(path, StandardOpenOption.CREATE,
+						StandardOpenOption.TRUNCATE_EXISTING);) {
+					// Read the file using Files.lines and collect it into a List
+					map.entrySet().forEach(line -> {
+						try {
+							writer.write(String.format("%d %s\n", line.getValue(), line.getKey()));
+						} catch (IOException e) {
+							throw new UncheckedIOException(e);
+						}
+					});
+					writer.flush();
+				}
+
+				try (Stream<String> lines = Files.lines(Path.of(path.toUri()))) {
+					lines.sorted().forEach(System.out::println);
+				}
 			}
 
 		} catch (IOException e) {
@@ -115,19 +119,16 @@ public class Main {
 				System.exit(-1);
 				throw new RuntimeException("so java compiles");
 			} else {
-				SequenceInputStream is = new SequenceInputStream(Collections.enumeration(Arrays.stream(args).map(f -> {
-					try {
-
-						// Check file exists
-
-						// 3) parse file path
-
-						// 1) file read
-						return new FileInputStream(f);
-					} catch (FileNotFoundException e) {
-						throw new RuntimeException(e);
-					}
-				}).collect(Collectors.toList())));
+				// Check file exists
+				SequenceInputStream is = new SequenceInputStream(Collections
+						.enumeration(Arrays.stream(args).filter(f -> Paths.get(f).toFile().exists()).map(f -> {
+							try {
+								// 1) file read
+								return new FileInputStream(f);
+							} catch (FileNotFoundException e) {
+								throw new RuntimeException(e);
+							}
+						}).collect(Collectors.toList())));
 				br = new BufferedReader(new InputStreamReader(is));
 			}
 		}
