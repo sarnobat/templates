@@ -21,6 +21,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	// I forgot - why is the builtin "flag" package not good enougH?
 	"github.com/pborman/getopt"
 	"io"
 	"log"
