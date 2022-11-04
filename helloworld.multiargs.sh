@@ -12,7 +12,7 @@ trap 'echo dirty end $ARGS_TXT' SIGINT
 
 # args are space-delimited
 for VALUE in $ARGS; do
-	echo $VALUE >> /tmp/args.txt
+	echo $VALUE >> $ARGS_TXT
 done
 
 # stdin is newline-delimited
