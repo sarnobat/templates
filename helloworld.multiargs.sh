@@ -8,6 +8,7 @@ ARGS_TXT=`mktemp`
 trap 'echo dirty end (local) $ARGS_TXT' SIGINT
 trap 'echo dirty end (pipe)  $ARGS_TXT' SIGPIPE
 
+# TODO: if only I could get rid of this separate loop I'd have my idiom for a vim template
 # args are space-delimited
 for VALUE in $ARGS; do
 	echo $VALUE >> $ARGS_TXT
