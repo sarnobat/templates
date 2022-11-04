@@ -5,7 +5,10 @@
 ARGS="$@"
 
 # TODO: really we need a temp file
-rm /tmp/args.txt
+# rm /tmp/args.txt
+
+ARGS_TXT=`mktemp`
+trap 'echo dirty end $ARGS_TXT' SIGINT
 
 # args are space-delimited
 for VALUE in $ARGS; do
@@ -16,5 +19,5 @@ done
 cat /tmp/args.txt /dev/stdin | while read line ; do
 	echo $line
 done
-
-rm /tmp/args.txt
+echo "clean end: $ARGS_TXT"
+# rm /t$mp/args.txt
