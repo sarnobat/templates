@@ -16,7 +16,7 @@ for VALUE in $ARGS; do
 done
 
 # stdin is newline-delimited
-cat /tmp/args.txt /dev/stdin | while read line ; do
+cat $ARGS_TXT /dev/stdin | while read line ; do
 	echo $line
 done
 echo "clean end: $ARGS_TXT"
