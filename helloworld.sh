@@ -3,6 +3,9 @@
 ###
 ###     find  | head -6 | sh helloworld.sh
 
+set -o errexit
+set -o nounset
+
 while getopts ":ht" opt; do
   case ${opt} in
     h ) # process option h
@@ -13,6 +16,8 @@ while getopts ":ht" opt; do
       ;;
   esac
 done
+
+# TODO: exit if arg count is zero
 
 while read line ; do
 
@@ -29,12 +34,9 @@ while read line ; do
 	basename $line
 	dirname $line
 
-	# 	line_after=${line//o/PREFIX}
+	# line_after=${line//o/PREFIX}
 	# Looks like ^ isn't supported in variable expansion
-
-
 done < "${1:-/dev/stdin}"
-
 
 ### 7) convert epoch to date and vv
 epoch=`date +%s --date "2022-01-01" `
