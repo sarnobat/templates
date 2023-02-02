@@ -21,18 +21,17 @@ int main()
  
 	while ((read = getline(&line, &len, stdin)) != -1) {
 		
-		fprintf( stderr, "[debug] %s", line);
+		fprintf( stderr, "[debug] line: %s", line);
 		
 		regex_t re;
 		int compiled = regcomp(&re, "hello([a-bA-Z0-9]*)", REG_EXTENDED|REG_NOSUB);		
 		assert (compiled == 0);
 
 		int matchFound = regexec(&re, line, 0, NULL, 0);
-// 		printf("%s\n", compared);
 		if  (matchFound == 0) {
 			printf("match: %s", line);
 		} else if (matchFound == REG_NOMATCH) {
-//			printf("no match: %s", line);
+			fprintf( stderr, "[debug] no match: %s", line);
 		} else {
 			printf("error: %s", line);
 		}
