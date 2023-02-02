@@ -1,4 +1,4 @@
-// gcc -c helloworld2.c -o helloworld2c.o && gcc -o helloworld2c helloworld2c.o && find | ./helloworld2c
+// gcc -c helloworld.c -o helloworld.o && gcc -o helloworldc helloworld.o && find | ./helloworldc
 
 // also see https://github.com/sarnobat/c_helloworld/tree/master/1_hello_world 
 
