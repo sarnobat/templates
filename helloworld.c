@@ -14,6 +14,8 @@
 #include <stdlib.h>
 #include <glib.h>
 #include <sys/stat.h>
+#include <time.h>
+
 
 int main()
 {
@@ -66,9 +68,25 @@ int main()
 			g_error_free(error);
 		} else if (g_regex_get_capture_count(regex) > 0) {
 
-			printf("%6s Replace  %s  in  %30s  by  %s :  %s \n",
-				   prefix, pattern, input, replace, result);
+
+			//
+			// Date
+			//
+			time_t seconds = time(NULL);
+			struct tm *now = localtime(&seconds);
+			char timeFormatted[50];
+			strftime(timeFormatted, 50, "%A, %B %e, %Y", now);
+
+
+			printf("[%s] %6s Replace  %s  in  %30s  by  %s :  %s \n",
+				   timeFormatted, prefix, pattern, input, replace, result);
 		} else {
+
+
+
+// 			time_t my_time = time(NULL);
+			//printf("%s", ctime(&my_time));
+
 
 			///
 			/// 1) Print to stdout
