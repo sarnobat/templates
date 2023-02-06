@@ -16,10 +16,24 @@
 #include <sys/stat.h>
 #include <time.h>
 #include <search.h>
+#include <getopt.h>
 
+// Flag set by ‘--verbose’
+static int verbose_flag;
 
-int main()
-{
+int main (int argc, char **argv) {
+
+	
+
+  /* Print any remaining command line arguments (not options). */
+//   if (optind < argc)
+//     {
+//       printf ("non-option ARGV-elements: ");
+//       while (optind < argc)
+//         printf ("%s ", argv[optind++]);
+//       putchar ('\n');
+//     }
+
 	char *line = NULL;
 	size_t len = 0;
 	ssize_t read;
@@ -97,12 +111,6 @@ int main()
 				   timeFormatted, prefix, base1->data, pattern, input, replace, result);
 		} else {
 
-
-
-// 			time_t my_time = time(NULL);
-			//printf("%s", ctime(&my_time));
-
-
 			///
 			/// 1) Print to stdout
 			///
@@ -112,6 +120,76 @@ int main()
 		g_regex_unref(regex);
 
 	}
+
+	//
+	// CLI Options
+	//
+	int c;
+
+	while (1) {
+		static struct option long_options[] = {
+			// These options set a flag.
+			{"verbose", 	no_argument,       &verbose_flag, 'v'},
+			// These options don’t set a flag.
+			// We distinguish them by their indices.
+			{"num",			required_argument,       0, 'n'},
+			{"help",		no_argument, 0, 'h'},
+			{"force",		no_argument, 0, 'f'},
+			{0, 0, 0, 0}
+		};
+		// getopt_long stores the option index here.
+		int option_index = 0;
+
+		c = getopt_long (argc, argv, "fhvn:", long_options, &option_index);
+
+		// Detect the end of the options.
+		if (c == -1) {
+			break;
+		}
+
+		switch (c) {
+			case 0:
+			// If this option set a flag, do nothing else now.
+			if (long_options[option_index].flag != 0) {
+				break;
+			}
+			printf ("option %s", long_options[option_index].name);
+			if (optarg) {
+				printf (" with arg %s", optarg);
+			}
+			printf ("\n");
+			break;
+
+			case 'n':
+				printf ("option -n with value `%s'\n", optarg);
+				break;
+
+			case 'f':
+				puts ("option -f\n");
+				break;
+
+			case 'h':
+				puts ("option -h\n");
+				break;
+
+			case 'v':
+				puts ("option -v\n");
+				break;
+
+			case '?':
+				// getopt_long already printed an error message
+				break;
+
+			default:
+				abort ();
+        }
+    }
+    
+  	// Instead of reporting ‘--verbose’
+    // we report the final status resulting from them.
+	if (verbose_flag) {
+		printf("verbose flag is set: %c\n", verbose_flag);
+    }
  
 	free(line);
 	exit(EXIT_SUCCESS);
