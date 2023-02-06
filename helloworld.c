@@ -49,7 +49,7 @@ int main()
 		// TODO: json parse
 		//
 		
-		const char* pattern = "git";
+		const char* pattern = "git(.)";
 		const char* input = line;
 		const char* replace = "got";
 		GError* error = NULL;
@@ -64,16 +64,18 @@ int main()
 		if (result == NULL) {
 			fprintf(stderr, "%s\n", error->message);
 			g_error_free(error);
+		} else if (g_regex_get_capture_count(regex) > 0) {
+
+			printf("%6s Replace  %s  in  %30s  by  %s :  %s \n",
+				   prefix, pattern, input, replace, result);
 		} else {
 
 			///
 			/// 1) Print to stdout
 			///
-
-			printf("%6s Replace  %s  in  %30s  by  %s :  %s \n",
-				   prefix, pattern, input, replace, result);
-			g_free(result);
+			fprintf(stderr, "[debug] %s\n", line);
 		}
+		g_free(result);
 		g_regex_unref(regex);
 
 	}
