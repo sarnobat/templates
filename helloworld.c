@@ -25,12 +25,13 @@ int main()
 	/// 1) Loop over stdin
 	///
 	while ((read = getline(&line, &len, stdin)) != -1) {
-		
-		fprintf( stderr, "[debug] line: %s", line);
-		
-		const char* pattern = "\n";
+		// 
+
+		// remove newline
+		line[strlen(line)-1] = '\0';
+		const char* pattern = "git";
 		const char* input = line;
-		const char* replace = "__NEWLINE__";
+		const char* replace = "got";
 		GError* error = NULL;
 		GRegex* regex = g_regex_new(pattern, 0, 0, &error);
 		if (regex == NULL) {
