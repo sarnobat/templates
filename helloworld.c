@@ -18,26 +18,41 @@ int main()
 	char *line = NULL;
 	size_t len = 0;
 	ssize_t read;
-	regmatch_t substmatch[1];
+	size_t maxGroups = 3;
+	regmatch_t groupArray[maxGroups];
 
  	///
 	/// 1) Loop over stdin
 	///
 	while ((read = getline(&line, &len, stdin)) != -1) {
-		
+
+		///
+		/// 1) Print to stdout or stderr
+		///		
 		fprintf( stderr, "[debug] line: %s", line);
 		
 		regex_t re;
 		int compiled = regcomp(&re, "hello([a-bA-Z0-9]*)", REG_EXTENDED|REG_NOSUB);		
 		assert (compiled == 0);
 
-		int matchFound = regexec(&re, line, 0, substmatch, 0);
+		int matchFound = regexec(&re, line, 0, groupArray, 0);
 		if  (matchFound == 0) {
-		
-			///
-			/// 1) Print to stdout
-			///
+			unsigned int g = 0;		
+
 			printf("match: %s", line);
+
+			for (g = 0; g < maxGroups; g++) {
+				if (groupArray[g].rm_so == (size_t)-1) {
+					break;  // No more groups
+				}
+
+				char sourceCopy[strlen(line) + 1];
+				strcpy(sourceCopy, line);
+				sourceCopy[groupArray[g].rm_eo] = 0;
+				printf("Group %u: [%2u-%2u]: %s\n",
+					g, groupArray[g].rm_so, groupArray[g].rm_eo,
+					sourceCopy + groupArray[g].rm_so);
+			}
 		} else if (matchFound == REG_NOMATCH) {
 			fprintf( stderr, "[debug] no match: %s", line);
 		} else {
