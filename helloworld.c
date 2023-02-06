@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <glib.h>
+#include <sys/stat.h>
 
 int main()
 {
@@ -25,10 +26,29 @@ int main()
 	/// 1) Loop over stdin
 	///
 	while ((read = getline(&line, &len, stdin)) != -1) {
-		// 
+		char prefix[10];
 
 		// remove newline
 		line[strlen(line)-1] = '\0';
+		
+		//
+		// File path checker
+		//
+		struct stat sb;
+		int isDir  = stat(line, &sb) == 0 && S_ISDIR(sb.st_mode);
+		int isFile = stat(line, &sb) == 0 && S_ISREG(sb.st_mode);
+		if (isDir) {
+			strcpy(prefix,"[dir]");
+		} else if (isFile) {
+			strcpy(prefix,"[file]");
+		} else {
+			strcpy(prefix,"[neither]");
+		}
+		
+		//
+		// TODO: json parse
+		//
+		
 		const char* pattern = "git";
 		const char* input = line;
 		const char* replace = "got";
@@ -50,8 +70,8 @@ int main()
 			/// 1) Print to stdout
 			///
 
-			printf("Replace pattern '%s' in string '%s' by '%s': '%s'\n",
-				   pattern, input, replace, result);
+			printf("%6s Replace  %s  in  %30s  by  %s :  %s \n",
+				   prefix, pattern, input, replace, result);
 			g_free(result);
 		}
 		g_regex_unref(regex);
