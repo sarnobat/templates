@@ -18,7 +18,11 @@ int main()
 	char *line = NULL;
 	size_t len = 0;
 	ssize_t read;
- 
+	regmatch_t substmatch[1];
+
+ 	///
+	/// 1) Loop over stdin
+	///
 	while ((read = getline(&line, &len, stdin)) != -1) {
 		
 		fprintf( stderr, "[debug] line: %s", line);
@@ -27,8 +31,12 @@ int main()
 		int compiled = regcomp(&re, "hello([a-bA-Z0-9]*)", REG_EXTENDED|REG_NOSUB);		
 		assert (compiled == 0);
 
-		int matchFound = regexec(&re, line, 0, NULL, 0);
+		int matchFound = regexec(&re, line, 0, substmatch, 0);
 		if  (matchFound == 0) {
+		
+			///
+			/// 1) Print to stdout
+			///
 			printf("match: %s", line);
 		} else if (matchFound == REG_NOMATCH) {
 			fprintf( stderr, "[debug] no match: %s", line);
