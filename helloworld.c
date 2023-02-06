@@ -1,4 +1,4 @@
-// gcc -c helloworld.c -o helloworld.o && gcc -o helloworldc helloworld.o && find | ./helloworldc
+// gcc -I/Volumes/numerous/2022/usr/local/homebrew/Cellar/glib/2.72.2/lib/glib-2.0/include/ -I/Volumes/numerous/2022/usr/local/homebrew/Cellar/glib/2.72.2/include/glib-2.0/ -c helloworld.c -o helloworld.o && gcc -o helloworldc /Volumes/numerous/2022/usr/local/homebrew/Cellar/glib/2.72.2/lib/libglib-2.0.dylib helloworld.o && find | ./helloworldc
 
 // also see https://github.com/sarnobat/c_helloworld/tree/master/1_hello_world 
 
@@ -12,6 +12,7 @@
 #include <regex.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <glib.h>
 
 int main()
 {
@@ -25,24 +26,35 @@ int main()
 	///
 	while ((read = getline(&line, &len, stdin)) != -1) {
 		
+		line[len-4] = 0;
 		fprintf( stderr, "[debug] line: %s", line);
 		
-		regex_t re;
-		int compiled = regcomp(&re, "hello([a-bA-Z0-9]*)", REG_EXTENDED|REG_NOSUB);		
-		assert (compiled == 0);
-
-		int matchFound = regexec(&re, line, 0, substmatch, 0);
-		if  (matchFound == 0) {
-		
+		const char* pattern = "\n";
+		const char* input = line;
+		const char* replace = "X";
+		GError* error = NULL;
+		GRegex* regex = g_regex_new(pattern, 0, 0, &error);
+		if (regex == NULL) {
+			fprintf(stderr, "[error] %s\n", error->message);
+			g_error_free(error);
+			continue;
+		}
+		char* result = g_regex_replace_literal(regex, input, -1,
+											   0, replace, 0, &error);
+		if (result == NULL) {
+			fprintf(stderr, "%s\n", error->message);
+			g_error_free(error);
+		} else {
 			///
 			/// 1) Print to stdout
 			///
-			printf("match: %s", line);
-		} else if (matchFound == REG_NOMATCH) {
-			fprintf( stderr, "[debug] no match: %s", line);
-		} else {
-			printf("error: %s", line);
+
+			printf("Replace pattern '%s' in string '%s' by '%s': '%s'\n",
+				   pattern, input, replace, result);
+			g_free(result);
 		}
+		g_regex_unref(regex);
+
 	}
  
 	free(line);
