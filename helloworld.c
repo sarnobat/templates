@@ -26,12 +26,11 @@ int main()
 	///
 	while ((read = getline(&line, &len, stdin)) != -1) {
 		
-		line[len-4] = 0;
 		fprintf( stderr, "[debug] line: %s", line);
 		
 		const char* pattern = "\n";
 		const char* input = line;
-		const char* replace = "X";
+		const char* replace = "__NEWLINE__";
 		GError* error = NULL;
 		GRegex* regex = g_regex_new(pattern, 0, 0, &error);
 		if (regex == NULL) {
@@ -45,6 +44,7 @@ int main()
 			fprintf(stderr, "%s\n", error->message);
 			g_error_free(error);
 		} else {
+
 			///
 			/// 1) Print to stdout
 			///
