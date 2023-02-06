@@ -15,6 +15,7 @@
 #include <glib.h>
 #include <sys/stat.h>
 #include <time.h>
+#include <search.h>
 
 
 int main()
@@ -23,6 +24,8 @@ int main()
 	size_t len = 0;
 	ssize_t read;
 	regmatch_t substmatch[1];
+
+	hcreate(10);
 
  	///
 	/// 1) Loop over stdin
@@ -46,6 +49,16 @@ int main()
 		} else {
 			strcpy(prefix,"[neither]");
 		}
+		
+		//
+		// 3) Parse fie path
+		//
+		gchar* base = g_path_get_basename(line);
+		ENTRY item;
+		item.key = line;
+        item.data = base;
+
+		hsearch(item, ENTER);
 		
 		//
 		// TODO: json parse
@@ -77,9 +90,11 @@ int main()
 			char timeFormatted[50];
 			strftime(timeFormatted, 50, "%A, %B %e, %Y", now);
 
-
-			printf("[%s] %6s Replace  %s  in  %30s  by  %s :  %s \n",
-				   timeFormatted, prefix, pattern, input, replace, result);
+			ENTRY item1;
+			item1.key = line;
+			ENTRY *base1 = hsearch(item1, FIND);
+			printf("[%s] %6s %30s Replace  %s  in  %30s  by  %s :  %s \n",
+				   timeFormatted, prefix, base1->data, pattern, input, replace, result);
 		} else {
 
 
