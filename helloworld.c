@@ -49,7 +49,7 @@ int main()
 
 				char sourceCopy[strlen(line) + 1];
 				strcpy(sourceCopy, line);
-// 				sourceCopy[groupArray[g].rm_eo] = 0;
+				sourceCopy[groupArray[g].rm_eo] = 0;
 // 				printf("Group %u: [%2ld-%2ld]: %s\n",
 // 					g, groupArray[g].rm_so, groupArray[g].rm_eo,
 // 					sourceCopy + groupArray[g].rm_so);
