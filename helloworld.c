@@ -21,6 +21,8 @@
 // Flag set by ‘--verbose’
 static int verbose_flag;
 
+void *PrintHello(void *threadid);
+
 int main (int argc, char **argv) {
 
 	
@@ -192,6 +194,54 @@ int main (int argc, char **argv) {
     }
  
 	free(line);
+
+	//
+	// 6) Execute shell command
+	//	
+	FILE *fp;
+	char path[1035];
+
+	/* Open the command for reading. */
+	fp = popen("uname -a", "r");
+	if (fp == NULL) {
+		printf("Failed to run command\n" );
+		exit(1);
+	}
+
+	/* Read the output a line at a time - output it. */
+	while (fgets(path, sizeof(path), fp) != NULL) {
+		printf("[shell command] %s", path);
+	}
+
+	/* close */
+	pclose(fp);
+
+	//
+	// 8) thread
+	//
+	int numThreads = 5;
+	pthread_t threads[numThreads];
+	int rc;
+	long t;
+	for(t=0;t< numThreads;t++){
+		printf("In main: creating thread %ld\n", t);
+		rc = pthread_create(&threads[t], NULL, PrintHello, (void *)t);
+		if (rc) {
+			printf("ERROR; return code from pthread_create() is %d\n", rc);
+			exit(-1);
+		}
+	}
+
+	/* Last thing that main() should do */
+	pthread_exit(NULL);
+   
 	exit(EXIT_SUCCESS);
 }
 
+void *PrintHello(void *threadid)
+{
+   long tid;
+   tid = (long)threadid;
+   printf("running thread #%ld\n", tid);
+   pthread_exit(NULL);
+}
