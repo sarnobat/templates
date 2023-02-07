@@ -232,10 +232,16 @@ int main (int argc, char **argv) {
 		}
 	}
 
-	/* Last thing that main() should do */
+	//
+	// 9) Write to a file
+	//
+	char filename[] = "/tmp/prefixXXXXXX";
+	int fd = mkstemp(filename);
+	printf("cat %s\n", filename);
+	dprintf(fd, "hello 2\n");close(fd);
+
+	// Last thing that main() should do
 	pthread_exit(NULL);
-   
-	exit(EXIT_SUCCESS);
 }
 
 void *PrintHello(void *threadid)
