@@ -1,4 +1,4 @@
-// gcc -I/Volumes/numerous/2022/usr/local/homebrew/Cellar/glib/2.72.2/lib/glib-2.0/include/ -I/Volumes/numerous/2022/usr/local/homebrew/Cellar/glib/2.72.2/include/glib-2.0/ -c helloworld.c -o helloworld.o && gcc -o helloworldc /Volumes/numerous/2022/usr/local/homebrew/Cellar/glib/2.72.2/lib/libglib-2.0.dylib helloworld.o && find | ./helloworldc
+// gcc -I/opt/local/include/ -I/Volumes/numerous/2022/usr/local/homebrew/Cellar/glib/2.72.2/lib/glib-2.0/include/ -I/Volumes/numerous/2022/usr/local/homebrew/Cellar/glib/2.72.2/include/glib-2.0/ -c helloworld.c -o helloworld.o && gcc -o helloworldc /Volumes/numerous/2022/usr/local/homebrew/Cellar/glib/2.72.2/lib/libglib-2.0.dylib  /opt/local/lib/libjson-c.dylib  helloworld.o && find | ./helloworldc
 
 // also see https://github.com/sarnobat/c_helloworld/tree/master/1_hello_world 
 
@@ -9,14 +9,15 @@
 // /Volumes/git/github/c_helloworld/6_exif_library
 
 #include <assert.h>
+#include <getopt.h>
+#include <glib.h>
+#include <json/json.h>
 #include <regex.h>
+#include <search.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <glib.h>
 #include <sys/stat.h>
 #include <time.h>
-#include <search.h>
-#include <getopt.h>
 
 // Flag set by ‘--verbose’
 static int verbose_flag;
@@ -25,22 +26,12 @@ void *PrintHello(void *threadid);
 
 int main (int argc, char **argv) {
 
-	
-
-  /* Print any remaining command line arguments (not options). */
-//   if (optind < argc)
-//     {
-//       printf ("non-option ARGV-elements: ");
-//       while (optind < argc)
-//         printf ("%s ", argv[optind++]);
-//       putchar ('\n');
-//     }
-
 	char *line = NULL;
 	size_t len = 0;
 	ssize_t read;
 	regmatch_t substmatch[1];
 
+	// Hash table
 	hcreate(10);
 
  	///
@@ -77,8 +68,26 @@ int main (int argc, char **argv) {
 		hsearch(item, ENTER);
 		
 		//
-		// TODO: json parse
+		// 9) json parse
 		//
+		if (line[0] == '{') {
+			fprintf(stderr, "[debug] might be a json object: %s\n", line);
+			json_object *jobj = json_tokener_parse (line);
+			fprintf(stderr, "[debug] json type: %d\n", json_object_get_type(jobj));
+			
+			if (json_object_get_type(jobj) == json_type_object) {
+				fprintf(stderr, "[debug] is a json object: %s\n", line);
+				json_object_object_foreach(jobj, key, val) {
+					int type = json_object_get_type(val);
+					switch (type) {
+					case json_type_string: 
+						printf("type: json_type_string\n");
+						printf("key: %s\tvalue: %s\n", key, json_object_get_string(val));
+						break;
+					}
+				}				
+			}
+		}
 		
 		const char* pattern = "git(.)";
 		const char* input = line;
