@@ -7,7 +7,7 @@
 //
 //
 //	npm install command-line-args --save
-
+//
 // DATE
 //
 //	2022 Jan 23
@@ -18,13 +18,11 @@
 //
 //-----------------------------------------------------------------------------------------
 
-
 const readline		= require('readline');
 
-
-	///
-	/// 5) CLI options
-	///
+///
+/// 5) CLI options
+///
 
 var stdio = require('stdio');
 var getopt = stdio.getopt;

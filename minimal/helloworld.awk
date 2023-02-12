@@ -33,12 +33,6 @@ BEGIN {
 	print datestamp"_"firstNchars".mwk"
 	
 	# TODO: print padded
-	line = sprintf( "Prefix:%-32s", "hi")
-	print line
-	
-	# TODO: add to associative array
 }
 END {
-	# TODO: print all element pairs of associative array
 }
-

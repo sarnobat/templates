@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "command-line-args": "^5.2.0",
+    "stdio": "^2.1.1"
+  }
+}
