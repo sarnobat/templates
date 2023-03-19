@@ -11,8 +11,11 @@ int main()
 	///
 	using namespace std;
 
+
+
 	std::string line;
 	while (std::getline(std::cin, line)) {
+		boost::filesystem::path file(line);
 		std::cout << "line: " << line << std::endl;
 	}
 //	cout << "Hello, World" << endl;
