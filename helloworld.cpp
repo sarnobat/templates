@@ -41,6 +41,14 @@ int main(int argc, char* argv[]) {
 			char resolved_path[PATH_MAX]; 
 			realpath(myString.c_str(), resolved_path);
 			cout << "abs:\t" << resolved_path << std::endl;
+
+			///
+			/// 6) Call a shell program instead
+			///
+
+			///
+			/// 5) dictionary
+			///
 		} else {
 			///
 			/// 1) Print to stdout
