@@ -21,6 +21,30 @@
 
 using namespace std;
 
+using namespace std;
+
+string exec(string command) {
+   char buffer[128];
+   string result = "";
+
+   // Open pipe to file
+   FILE* pipe = popen(command.c_str(), "r");
+   if (!pipe) {
+      return "popen failed!";
+   }
+
+   // read till end of process:
+   while (!feof(pipe)) {
+
+      // use buffer to read and add to result
+      if (fgets(buffer, 128, pipe) != NULL)
+         result += buffer;
+   }
+
+   pclose(pipe);
+   return result;
+}
+
 int main(int argc, char* argv[]) {
 	///
 	/// 1) Loop over stdin
@@ -45,6 +69,20 @@ int main(int argc, char* argv[]) {
 			///
 			/// 6) Call a shell program instead
 			///
+			std::string cmd = std::string("dirname ") + myString;
+
+			char buffer[128];
+			string result = "";
+
+			FILE* pipe = popen(cmd.c_str(), "r");
+			if (pipe) {
+				while (!feof(pipe)) {
+				  if (fgets(buffer, 128, pipe) != NULL)
+					 result += buffer;
+				}
+				pclose(pipe);			
+				cout << "dirname output: " << result << "\n";
+			}
 
 			///
 			/// 5) dictionary
