@@ -1,15 +1,15 @@
 //-----------------------------------------------------------------------------------------
 // EXAMPLE
 //
-//   find | ./helloworld
+//		find | ./helloworld
 //
 // COMPILE TO NATIVE
 //
-//	/Volumes/numerous/usr/local/homebrew/Cellar/gcc/11.3.0_2/bin/g++-11 -I/Volumes/numerous/2022/usr/local/homebrew/Cellar/boost/1.81.0_1/include/ -L /Volumes/numerous/2022/usr/local/homebrew/Cellar/boost/1.81.0_1/lib/ -l boost_filesystem helloworld.cpp -o helloworld
+//		/Volumes/numerous/usr/local/homebrew/Cellar/gcc/11.3.0_2/bin/g++-11 -I/Volumes/numerous/2022/usr/local/homebrew/Cellar/boost/1.81.0_1/include/ -L /Volumes/numerous/2022/usr/local/homebrew/Cellar/boost/1.81.0_1/lib/ -l boost_filesystem helloworld.cpp -o helloworld
 //
 // DATE
 //
-//	2022 Jan 20
+//		2022 Jan 20
 //
 //-----------------------------------------------------------------------------------------
 
@@ -18,8 +18,6 @@
 #include <fstream>
 #include <string>
 using namespace std;
-
-// string filename = "/tmp/";
 
 int main(int argc, char* argv[]) {
 	///
