@@ -24,11 +24,6 @@ int main(int argc, char* argv[])
 			cout << "not existing:\t" << myString << std::endl;
 		}
 	}
-	//   cout << "exists: " << (stat (myString.c_str(), &buffer) == 0) << "\n";
-
-	//   std::ofstream o(filename.c_str());
-
-	//   o << "Hello, World\n" << std::endl;
 
 	return 0;
 }
