@@ -1,16 +1,16 @@
 //-----------------------------------------------------------------------------------------
 // EXAMPLE
 //
-//		find	| ./helloworld
-//		du		| ./helloworld
+//	find	| ./helloworld
+//	du	| ./helloworld
 //
 // COMPILE TO NATIVE
 //
-//		/Volumes/numerous/usr/local/homebrew/Cellar/gcc/11.3.0_2/bin/g++-11 -I/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/ -I/Volumes/numerous/2022/usr/local/homebrew/Cellar/boost/1.81.0_1/include/ -L /Volumes/numerous/2022/usr/local/homebrew/Cellar/boost/1.81.0_1/lib/ -l boost_filesystem helloworld.cpp -o helloworld
+//	/Volumes/numerous/usr/local/homebrew/Cellar/gcc/11.3.0_2/bin/g++-11 -I/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include/ -I/Volumes/numerous/2022/usr/local/homebrew/Cellar/boost/1.81.0_1/include/ -L /Volumes/numerous/2022/usr/local/homebrew/Cellar/boost/1.81.0_1/lib/ -l boost_filesystem helloworld.cpp -o helloworld
 //
 // DATE
 //
-//		2022 Jan 20
+//	2022 Jan 20
 //
 //-----------------------------------------------------------------------------------------
 
@@ -26,6 +26,7 @@ using namespace std;
 using namespace std;
 
 string exec(string command) {
+
    char buffer[128];
    string result = "";
 
@@ -48,6 +49,10 @@ string exec(string command) {
 }
 
 int main(int argc, char* argv[]) {
+	///
+	/// 5) CLI options
+	///
+
 	///
 	/// 1) Loop over stdin
 	///
