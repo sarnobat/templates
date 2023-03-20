@@ -1,7 +1,8 @@
 //-----------------------------------------------------------------------------------------
 // EXAMPLE
 //
-//		find | ./helloworld
+//		find	| ./helloworld
+//		du		| ./helloworld
 //
 // COMPILE TO NATIVE
 //
@@ -17,6 +18,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <regex>
 #include <limits.h>
 
 using namespace std;
@@ -54,7 +56,7 @@ int main(int argc, char* argv[]) {
 		std::string myString = line;
 		struct stat buffer;
 		if (stat (myString.c_str(), &buffer) == 0) {
-			//cout << "exists:\t" << myString << std::endl;
+
 			// check if it's a file or a dir
 			if (S_ISREG(buffer.st_mode)) {
 				cout << "file:\t" << myString << std::endl;
@@ -91,7 +93,25 @@ int main(int argc, char* argv[]) {
 			///
 			/// 1) Print to stdout
 			///
-			cout << "not existing:\t" << myString << std::endl;
+			cout << "not a file path:\t" << myString << std::endl;
+
+			///
+			/// 2) Regex capture groups extracted and read separately (not used directly
+			/// in a substitution) will cover more scenarios.
+			///
+			std::regex rgx("^([0-9]*)\\s(.*)");
+			std::smatch matches;
+
+			if (std::regex_search(myString, matches, rgx)) {
+				std::cout << "\tMatch found\n";
+
+				for (size_t i = 0; i < matches.size(); ++i) {
+				std::cout << "\t" << i << ": '" << matches[i].str() << "'\n";
+				}
+			} else {
+				// no match
+				std::cout << "Match not found\n";
+			}
 		}
 	}
 
