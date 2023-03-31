@@ -25,28 +25,6 @@ using namespace std;
 
 using namespace std;
 
-string exec(string command) {
-
-   char buffer[128];
-   string result = "";
-
-   // Open pipe to file
-   FILE* pipe = popen(command.c_str(), "r");
-   if (!pipe) {
-      return "popen failed!";
-   }
-
-   // read till end of process:
-   while (!feof(pipe)) {
-
-      // use buffer to read and add to result
-      if (fgets(buffer, 128, pipe) != NULL)
-         result += buffer;
-   }
-
-   pclose(pipe);
-   return result;
-}
 
 int main(int argc, char* argv[]) {
 	///
@@ -62,6 +40,9 @@ int main(int argc, char* argv[]) {
 		struct stat buffer;
 		if (stat (myString.c_str(), &buffer) == 0) {
 
+			//
+			// File path checker
+			//
 			// check if it's a file or a dir
 			if (S_ISREG(buffer.st_mode)) {
 				cout << "file:\t" << myString << std::endl;
@@ -74,7 +55,7 @@ int main(int argc, char* argv[]) {
 			cout << "abs:\t" << resolved_path << std::endl;
 
 			///
-			/// 6) Call a shell program instead
+			/// 6) Execute shell command
 			///
 			std::string cmd = std::string("dirname ") + myString;
 
