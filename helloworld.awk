@@ -19,6 +19,9 @@ BEGIN {
 /^=+ /    {
 
 }
+# Not Heading
+$0 !~/^=== / {
+}
 # datestamp
 /^2[0-9]{3}-[0-9]{2}(-[0-9]{2})?$/    {
 
@@ -37,6 +40,10 @@ BEGIN {
 	print line
 	
 	# TODO: add to associative array
+}
+// {
+	# use printf if you don't want a newline
+	print "[unmodified] " $0
 }
 END {
 	# TODO: print all element pairs of associative array
