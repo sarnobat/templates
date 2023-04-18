@@ -39,6 +39,8 @@ $0 !~/^=== / {
 	line = sprintf( "Prefix:%-32s", "hi")
 	print line
 	
+	printf "%-15s %-20s %s %s %s\n", $11, $4, $8, $9, $6
+	
 	# TODO: add to associative array
 }
 // {
