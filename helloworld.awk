@@ -16,7 +16,7 @@ BEGIN {
 	FS="(	| )+"
 }
 # Heading
-/^=+ /    {
+$0  ~ /^=+ /    {
 
 }
 # Not Heading
