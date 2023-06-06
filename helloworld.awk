@@ -25,6 +25,11 @@ $0 !~/^=== / {
 # datestamp
 /^2[0-9]{3}-[0-9]{2}(-[0-9]{2})?$/    {
 
+	# command line argument
+	for (i = 0; i < ARGC; i++) {
+		print ARGV[i]
+	}
+
 	firstNchars = substr($0, 0, 20)
 
 	# regex substitution (in-place)
