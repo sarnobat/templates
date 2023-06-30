@@ -80,13 +80,13 @@ func main() {
 			case err != nil:
 				fmt.Println(err)
 			case i.IsDir():
-				fmt.Println("	", p, "is a directory")
+				fmt.Printf("%-15s %s\n", "[dir]", p)
 			default:
-				fmt.Println("	", p, "is a file")
+				fmt.Printf("%-15s %s\n", "[file]", p)
 			}
 			// get absolute path
 			abs, _ := filepath.Abs(p)
-			fmt.Println("	absolute: " + abs)
+			fmt.Printf("%-15s %s\n", "[absolute]", abs)
 
 			///
 			/// 6) Call a shell program instead
@@ -118,7 +118,7 @@ func main() {
 			// We don't need to check if it's a folder to recurse into. Stdin will ensure that
 			// we recurse.
 			if counts[dirname] <= 5 {
-				fmt.Println("", p, "\n")
+				fmt.Printf("%-15s %s\n","[dictionary]", p)
 			}
 
 		} else {
