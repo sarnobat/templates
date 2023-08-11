@@ -1,5 +1,6 @@
 #!/usr/local/bin/wish
 
+# it seems python's tkinter is the more modern choice
 proc listDirs {} {
 	set output_list [exec seq 1 10]
 	foreach dir_base_name $output_list {
