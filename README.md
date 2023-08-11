@@ -3,6 +3,9 @@ helloworld templates for each language that you can copy and paste to quickly cr
 
 * r23c: International law requires that all programming tutorials start out with a variation of "hello, world!" as their first example.
 
+TODO: fill in gaps using chatGPT
+
+
 ### Tcl/tk
 ```tcl
 #!/usr/local/bin/wish
@@ -79,3 +82,25 @@ BEGIN {
 ```
 
 ### Javascript
+
+## Phrase book
+https://docs.google.com/spreadsheets/d/1xg_QHbZR0JKY1zQhgyexgtzw9mLe69F-i8Z6Q9AoHkg/edit?usp=sharing
+
+## Programming languages compared
+```
+=== ===
+
+#programmingtips
+
+Alll the programming languages I know are nice for different reasons
+
+Javascript - elegant map reduce; can be used in browser unlike everything else
+Shell - easy to compose
+Python - so compact
+Java - the compiler weeds out mistakes before runtime
+Golang - code is clean
+
+Python is better than nodejs because libraries are more likely to be preinstalled (I think, I could be wrong)
+
+2021-12-23
+```
