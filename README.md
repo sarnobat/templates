@@ -104,3 +104,32 @@ Python is better than nodejs because libraries are more likely to be preinstalle
 
 2021-12-23
 ```
+
+```
+=== ===
+#visualization
+#programmingtips
+#programminglanguages
+
+(See if you can depict this as an inverted pyramid)
+
+Wide - Bash 
+Less wide - Python
+Narrow - Golang
+Narrowest - C
+
+2023-07-31
+```
+
+```
+=== first class citizens ===
+#programminglanguages
+#programmingtips
+
+Bash - everything is a file
+SQL - everything is a field
+Java - everything is an object
+C - everything is a memory pointer
+
+2023-07-31
+```
