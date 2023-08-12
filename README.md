@@ -133,3 +133,10 @@ C - everything is a memory pointer
 
 2023-07-31
 ```
+
+###
+
+| Type of language | modification | execution | example |
+|------------------|--------------|------------|--------|
+| Scripting language | frequent | rare | Bash, Python, Javascript |
+| System language | rare | frequent | C, Golang, Java |
