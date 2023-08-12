@@ -140,3 +140,5 @@ C - everything is a memory pointer
 |------------------|--------------|------------|--------|
 | Scripting language | frequent | rare | Bash, Python, Javascript |
 | System/Compiled language | rare | frequent | C, Golang, Java |
+
+Good article: https://web.stanford.edu/~ouster/cgi-bin/papers/scripting.pdf (Scripting: HigherLevel Programming for the 21st Century (John K. Ousterhout))
