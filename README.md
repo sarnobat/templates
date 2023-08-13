@@ -121,7 +121,7 @@ Narrowest - C
 
 2023-07-31
 ```
-![image](https://github.com/sarnobat/templates/assets/2905777/9d63a46b-2c5e-492b-b6c3-c1b89eee1434)
+<img src="https://github.com/sarnobat/templates/assets/2905777/9d63a46b-2c5e-492b-b6c3-c1b89eee1434" height=400>
 
 
 ```
