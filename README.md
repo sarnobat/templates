@@ -113,7 +113,8 @@ Python is better than nodejs because libraries are more likely to be preinstalle
 
 (See if you can depict this as an inverted pyramid)
 
-Wide - Bash 
+Wide - Bash
+Less wide - Awk
 Less wide - Python
 Narrow - Golang
 Narrowest - C
