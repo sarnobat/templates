@@ -19,5 +19,5 @@
 	 (if 	(valid-file-path-p line)
 			(progn 
 				(print (concatenate 'string "[file path] " 	line))
-				(print (concatenate 'string "[file name] " (greet-user "Alice"))))
+				(print (concatenate 'string "[file name] " (greet-user line))))
       		(print (concatenate 'string "[not file] " line))))
