@@ -68,7 +68,7 @@ int main (int argc, char **argv) {
 		hsearch(item, ENTER);
 		
 		//
-		// 9) json parse
+		// 9) json parse (use external library)
 		//
 		if (line[0] == '{') {
 			fprintf(stderr, "[debug] might be a json object: %s\n", line);

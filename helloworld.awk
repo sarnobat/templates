@@ -12,6 +12,25 @@
 # backreferences don't exist. gsub is probably the next best thing
 # there are no boolean variables, you must use strings
 
+## TODO: show examples of these:
+##
+## next
+##
+# 	/(name)=(.*)/ {
+# 	  name = $2  # Capture everything after "name="
+# 	  print "Hello,", name
+# 	}
+# 	
+# 	/name/ && /active/ { print $0 }  # Matches lines containing "name" and "active"
+# 	/^(red|blue|green)/ { print $0 }  # Matches lines starting with "red", "blue", or "green"
+# 	!/^error/ { print $0 }  # Matches lines that don't start with "error"
+# 	/(name)=(.*)/ { print "Name:", $2 }  # Captures everything after "name=" in $2
+# 	/color(..)/ { print "Found color code:", $2 }  # Captures two characters after "color"
+# 	# Match lines where the second field is a number greater than 10
+# 	/$2 > 10/ { print $0 }
+# 	# Match lines where the third field exactly matches the string "active"
+# 	/$3 == "active"/ { print $0 }
+
 BEGIN {
 	FS="(	| )+"
 }
