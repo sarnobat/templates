@@ -1,3 +1,5 @@
+-- USAGE
+-- find -L  / |  ./helloworld.hs.bin
 main:: IO ()
 main = loop
 
