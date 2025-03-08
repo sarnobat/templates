@@ -88,7 +88,10 @@ int main (int argc, char **argv) {
 				}				
 			}
 		}
-		
+
+		//
+		// Regex
+		//		
 		const char* pattern = "git(.)";
 		const char* input = line;
 		const char* replace = "got";
