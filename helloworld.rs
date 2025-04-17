@@ -1,3 +1,7 @@
+// I can't get this to compile using rustc. Looks like I'm stuck with cargo
+// cargo build --verbose will tell you the underlying rustc commands
+
+//extern crate clap;
 use clap::{App, Arg};
 use std::process;
 
